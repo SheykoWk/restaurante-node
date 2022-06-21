@@ -7,8 +7,8 @@
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
     "test": "mocha ",
-    "eslint" : "eslint --ignore-path .gitignore .",
-    "prettier" : "prettier --write '**/*.js' --ignore-path .gitignore ."
+    "eslint": "eslint --ignore-path .gitignore .",
+    "prettier": "prettier --write '**/*.js' --ignore-path .gitignore ."
   },
   "repository": {
     "type": "git",
@@ -52,6 +52,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.16",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "sequelize-auto": "^0.8.8"
   }
 }

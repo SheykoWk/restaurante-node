@@ -1,33 +1,70 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class users extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('users', {
+    uuid: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      primaryKey: true
+    },
+    fistname: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: "users_email_key"
+    },
+    telephone: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    verified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
+    },
+    role_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'roles',
+        key: 'id'
+      }
     }
-  }
-  users.init({
-    uuid: DataTypes.UUID,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    telephone: DataTypes.STRING,
-    password: DataTypes.STRING,
-    verified: DataTypes.BOOLEAN,
-    active: DataTypes.BOOLEAN,
-    role_id: DataTypes.INTEGER,
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'users',
+    tableName: 'users',
+    schema: 'public',
+    timestamps: true,
+    indexes: [
+      {
+        name: "users_email_key",
+        unique: true,
+        fields: [
+          { name: "email" },
+        ]
+      },
+      {
+        name: "users_pkey",
+        unique: true,
+        fields: [
+          { name: "uuid" },
+        ]
+      },
+    ]
   });
-  return users;
 };
