@@ -3,11 +3,11 @@ const uuid = require('uuid');
 const users = require('../database/models/init-models').initModels().users;
 
 //Cualquier usuario
-const registerUser = (data) => {
+const registerUser = async (data) => {
     // todo: La contraseña tiene que estar encriptada con bcrypt
     const hashedPassword = crypto.hashPassword(data.password);
     const userId = uuid.v4();
-    const newUser = users.create({
+    const newUser = await users.create({
         id: userId,
         ...data,
         password: hashedPassword
@@ -49,7 +49,7 @@ const deleteUser = async(id) => {
 }
 
 // cualquier rol
-const editUser = (id, data) => {
+const editUser = async (id, data) => {
     const user = await users.update(data,{
         where: {
             id
