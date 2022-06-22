@@ -8,9 +8,10 @@ const registerUser = async (data) => {
     const hashedPassword = crypto.hashPassword(data.password);
     const userId = uuid.v4();
     const newUser = await users.create({
-        id: userId,
+        uuid: userId,
         ...data,
-        password: hashedPassword
+        password: hashedPassword,
+        role_id: 1
     })
 
     return {
@@ -31,20 +32,28 @@ const getAllUsers = async() => {
 
 //Solo administradores
 const getUserById = async(id) => {
-    const user = await users.findByPk(id)
+    const user = await users.findByPk(id, {
+        attributes : {
+            exclude: ["password"]
+        }
+    })
     return user
 }
 
 //clientes y administradores
 const deleteUser = async(id) => {
-    const user = await users.destroy({
-        where: {
-            id
+    try {
+        const user = await users.destroy({
+            where: {
+                id
+            }
+        })
+        return {
+            message: `User with id: ${id} deleted succesfully.`,
+            user
         }
-    })
-    return {
-        message: `User with id: ${id} deleted succesfully.`,
-        user
+    } catch (error) {
+        return error
     }
 }
 
