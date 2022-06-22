@@ -1,17 +1,13 @@
-const crypto = require('../utils/crypto');
+const crypto = require('../tools/crypt');
 const uuid = require('uuid');
-const sequelize = require('../models/index').sequelize;
-const initModels = require('../database/models/init-models');
-
-const models = initModels(sequelize)
-
+const users = require('../database/models/init-models').initModels().users;
 
 //Cualquier usuario
 const registerUser = (data) => {
     // todo: La contraseña tiene que estar encriptada con bcrypt
     const hashedPassword = crypto.hashPassword(data.password);
     const userId = uuid.v4();
-    const newUser = models.users.create({
+    const newUser = users.create({
         id: userId,
         ...data,
         password: hashedPassword
@@ -25,7 +21,7 @@ const registerUser = (data) => {
 
 //Solo administradores
 const getAllUsers = async() => {
-    const users = await models.users.findAll({
+    const users = await users.findAll({
         attributes : {
             exclude: ["password"]
         }
@@ -35,13 +31,13 @@ const getAllUsers = async() => {
 
 //Solo administradores
 const getUserById = async(id) => {
-    const user = await models.users.findByPk(id)
+    const user = await users.findByPk(id)
     return user
 }
 
 //clientes y administradores
 const deleteUser = async(id) => {
-    const user = await models.users.destroy({
+    const user = await users.destroy({
         where: {
             id
         }
@@ -54,7 +50,7 @@ const deleteUser = async(id) => {
 
 // cualquier rol
 const editUser = (id, data) => {
-    const user = await models.users.update(data,{
+    const user = await users.update(data,{
         where: {
             id
         }

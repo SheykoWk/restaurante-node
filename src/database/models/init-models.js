@@ -15,7 +15,23 @@ var _roles = require("./roles");
 var _users = require("./users");
 var _vehicles = require("./vehicles");
 
-function initModels(sequelize) {
+const Sequelize = require('sequelize');
+require('dotenv').config()
+const env = process.env.NODE_ENV || 'development';
+const config = require('../config/config');
+
+const configObj = config[env]
+
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[configObj.use_env_variable], configObj);
+} else {
+  sequelize = new Sequelize(configObj.database, configObj.username, configObj.password, configObj);
+}
+
+
+
+function initModels() {
   var customer_addresses = _customer_addresses(sequelize, DataTypes);
   var customer_details = _customer_details(sequelize, DataTypes);
   var deliveries = _deliveries(sequelize, DataTypes);
@@ -89,6 +105,6 @@ function initModels(sequelize) {
     vehicles,
   };
 }
-module.exports = initModels;
+
 module.exports.initModels = initModels;
-module.exports.default = initModels;
+module.exports.sequelize = sequelize
