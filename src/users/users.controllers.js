@@ -13,7 +13,6 @@ const registerUser = async (data) => {
         password: hashedPassword,
         role_id: 1
     })
-
     return {
         message: `User created succesfully with the id: ${userId}`,
         user: newUser,
@@ -29,6 +28,23 @@ const getAllUsers = async() => {
     })
     return users
 }
+
+[
+    {
+        id: 1,
+        name: 'jose',
+        age: 21,
+        country: 'col'
+    },
+    {
+        id: 2,
+        name: 'wilmar',
+        age: 27,
+        country: '<col>'
+    }
+]
+
+
 
 //Solo administradores
 const getUserById = async(id) => {

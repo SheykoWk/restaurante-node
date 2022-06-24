@@ -16,18 +16,6 @@ const usersControllers = require('./users.controllers')
 
 const getAllUsers = async (req, res) => {
 
-    if(!req.user.rol ){
-        res.status(401).json({
-            status: 401,
-            message: 'You don`t have clearance to make this request'
-        })
-    }
-    if(req.user.rol !== 'admin'){
-        res.status(401).json({
-            status: 401,
-            message: 'You don`t have clearance to make this request'
-        })
-    }
     const users = await usersControllers.getAllUsers()
     res.status(200).json(users)
 }

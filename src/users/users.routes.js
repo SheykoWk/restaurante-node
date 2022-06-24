@@ -8,7 +8,6 @@ require('../tools/auth')(passport)
 router.route('/')
     .get( passport.authenticate('jwt', config.jwtSecret) ,userHttpHandler.getAllUsers)
 
-    
 
 
 module.exports = {
