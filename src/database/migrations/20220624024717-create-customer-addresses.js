@@ -8,60 +8,70 @@ module.exports = {
          * Example:
          * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
          */
-        await queryInterface.createTable('users', {
+        await queryInterface.createTable('customer_addresses', {
             id: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 primaryKey: true,
             },
-            fistname: {
+            line_1: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            lastname: {
+            line_2: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            line_3: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            line_4: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            city: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            email: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                unique: 'users_email_key',
-            },
-            telephone: {
+            zip_postcode: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            password: {
+            state_province: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            verified: {
-                type: DataTypes.BOOLEAN,
+            country: {
+                type: DataTypes.STRING,
                 allowNull: false,
-                defaultValue: false,
             },
-            active: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: true,
+            longitude: {
+                type: DataTypes.REAL,
+                allowNull: true,
             },
-            role_id: {
-                type: DataTypes.INTEGER,
+            latitude: {
+                type: DataTypes.REAL,
+                allowNull: true,
+            },
+            other_details: {
+                type: DataTypes.TEXT,
+                allowNull: true,
+            },
+            user_uuid: {
+                type: DataTypes.UUID,
                 allowNull: false,
                 references: {
-                    model: 'roles',
+                    model: 'users',
                     key: 'id',
                 },
             },
         });
-        await queryInterface.addConstraint(
-            'users', //nombre de la tabla
-            {
-                fields: ['email', 'id'], //columnas que tendran esta restriccion
-                type: 'unique', //restriccion para que los valores sean unicos
-                name: 'unique_emai_id', //nombre para guardar el cambio
-            }
-        );
+        await queryInterface.addConstraint('roles', {
+            fields: ['id'],
+            type: 'unique',
+            name: 'customer_addresses_id_unique',
+        });
     },
 
     async down(queryInterface, Sequelize) {
@@ -71,14 +81,6 @@ module.exports = {
          * Example:
          * await queryInterface.dropTable('users');
          */
-        await queryInterface.dropTable('users');
+         await queryInterface.dropTable('customer_addresses');
     },
 };
-
-/*
-crear mis usuarios
-crear mis conversaciones
-
-
-
-*/

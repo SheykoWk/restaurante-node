@@ -25,10 +25,10 @@ module.exports = {
             },
         });
         await queryInterface.addConstraint('roles', {
-            fields: ['id'] ,
-            type : 'unique',
-            name: 'roles_pkey'
-        })
+            fields: ['id'],
+            type: 'unique',
+            name: 'roles_id_unique',
+        });
     },
 
     async down(queryInterface, Sequelize) {
@@ -38,5 +38,6 @@ module.exports = {
          * Example:
          * await queryInterface.dropTable('users');
          */
+        await queryInterface.dropTable('roles');
     },
 };
