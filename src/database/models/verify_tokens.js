@@ -1,29 +1,17 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('employees', {
+  return sequelize.define('verify_tokens', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    firstname: {
+    token: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    lastname: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    user_uuid: {
+    user_id: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
@@ -31,18 +19,19 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    other_details: {
-      type: DataTypes.TEXT,
-      allowNull: true
+    used: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false
     }
   }, {
     sequelize,
-    tableName: 'employees',
+    tableName: 'verify_tokens',
     schema: 'public',
     timestamps: true,
     indexes: [
       {
-        name: "employees_pkey",
+        name: "verify_tokens_pkey",
         unique: true,
         fields: [
           { name: "id" },

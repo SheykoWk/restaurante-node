@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('deliveries', {
-    uuid: {
+    id: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true
@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       references: {
         model: 'orders',
-        key: 'uuid'
+        key: 'id'
       }
     },
     delivery_date: {
@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       references: {
         model: 'customer_addresses',
-        key: 'uuid'
+        key: 'id'
       }
     },
     driver_employee_id: {
@@ -60,7 +60,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "deliveries_pkey",
         unique: true,
         fields: [
-          { name: "uuid" },
+          { name: "id" },
         ]
       },
     ]

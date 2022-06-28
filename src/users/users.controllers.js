@@ -85,6 +85,13 @@ const editUser = async (id, data) => {
         user: user
     }
 }
+// todo:
+// ? Crear una funcion que genere un token alfanumerico aleatorio de 8 caracteres
+// ? Generar un nuevo token y agregar un nuevo registro a la tabla de verify_tokens, con el userId para enlazar el token
+
+
+
+
 
 module.exports = {
     registerUser,

@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('order_items', {
-    order_uuid: {
+    id: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
       references: {
         model: 'orders',
-        key: 'uuid'
+        key: 'id'
       }
     },
     menu_item_id: {
@@ -38,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "order_items_pkey",
         unique: true,
         fields: [
-          { name: "order_uuid" },
+          { name: "id" },
           { name: "menu_item_id" },
         ]
       },

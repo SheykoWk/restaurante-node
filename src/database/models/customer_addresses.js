@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('customer_addresses', {
-    uuid: {
+    id: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true
@@ -52,11 +52,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     user_uuid: {
       type: DataTypes.UUID,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'uuid'
-      }
+      allowNull: false
     }
   }, {
     sequelize,
@@ -68,7 +64,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "customer_addresses_pkey",
         unique: true,
         fields: [
-          { name: "uuid" },
+          { name: "id" },
         ]
       },
     ]

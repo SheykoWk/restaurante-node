@@ -4,7 +4,8 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.UUID,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      unique: "unique_emai_id"
     },
     fistname: {
       type: DataTypes.STRING,
@@ -44,16 +45,6 @@ module.exports = function(sequelize, DataTypes) {
         model: 'roles',
         key: 'id'
       }
-    },
-    createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        field: 'created_at'
-    },
-    updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        field: 'updated_at'
     }
   }, {
     sequelize,
@@ -61,6 +52,14 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: true,
     indexes: [
+      {
+        name: "unique_emai_id",
+        unique: true,
+        fields: [
+          { name: "email" },
+          { name: "id" },
+        ]
+      },
       {
         name: "users_email_key",
         unique: true,
