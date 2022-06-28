@@ -87,8 +87,6 @@ function initModels() {
   users.hasMany(orders, { as: "orders", foreignKey: "user_uuid"});
   payments.belongsTo(users, { as: "user_uu", foreignKey: "user_uuid"});
   users.hasMany(payments, { as: "payments", foreignKey: "user_uuid"});
-  verify_tokens.belongsTo(users, { as: "user", foreignKey: "user_id"});
-  users.hasMany(verify_tokens, { as: "verify_tokens", foreignKey: "user_id"});
   deliveries.belongsTo(vehicles, { as: "vehicle_uu", foreignKey: "vehicle_uuid"});
   vehicles.hasMany(deliveries, { as: "deliveries", foreignKey: "vehicle_uuid"});
 

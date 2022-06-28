@@ -26,6 +26,8 @@ if(config.nodeEnv === 'development'){
 app.use("/api/v1/users", userRouter)
 //app.use("/api/v1/auth")
 
+
+
 app.listen(config.port, () => {
     console.log(`Server started at port ${config.port}`)
 })
