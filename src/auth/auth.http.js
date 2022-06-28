@@ -10,6 +10,7 @@ const generateUrl = (token, userId) => {
 }
 
 const generateVerifyToken = (req, res) => {
+    //? esta ruta debe estar dentro de /me/verify-account
     if(!req.user.id){
         res.status(400).json({message: 'Error'})
     }
@@ -33,6 +34,8 @@ const verifyAccount = (req, res) => {
         //todo crear ambos controladores para modificar la tabla de usuarios a verificado:true
         //todo y la tabla de verify_tokens a used: true
         //? Esta ruta no esta protegida, todo es a base del req.query
+        //todo crear las rutas necesarias para verificar la cuenta
+
     }
 }
 
