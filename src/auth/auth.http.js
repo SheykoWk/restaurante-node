@@ -3,6 +3,8 @@
 // ? genere una url como la siguiente:
 // ! /auth/verify-account?token=fbdsfdfpoi&user_id=2
 
+const roles = require("../database/models/roles")
+const users = require("../database/models/users")
 const { createToken } = require("./auth.controller")
 
 const generateUrl = (token, userId) => {
@@ -40,4 +42,15 @@ const verifyAccount = (req, res) => {
 }
 
 
+
+
+const loginUser = (req, res) => {
+
+ 
+    const token = jwt.sign({
+        id,
+        email,
+        rol
+    })
+}
 

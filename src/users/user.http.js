@@ -1,3 +1,4 @@
+const config = require('../config')
 const usersControllers = require('./users.controllers')
 
 // todo:
@@ -16,8 +17,34 @@ const usersControllers = require('./users.controllers')
 
 const getAllUsers = async (req, res) => {
 
-    const users = await usersControllers.getAllUsers()
-    res.status(200).json(users)
+    // ?offset=0
+    //* limit=5
+
+    //* page
+    //* start
+
+    const offset = req.query.offset
+    const limit = req.query.limit
+
+    const totalLength = await usersControllers.getPaginatedUsers()
+    //  limit, offset, size, length
+    const users = await usersControllers.getPaginatedUsers(offset, limit)
+
+    getPaginatedUsers(10)
+
+    
+
+    res.status(200).json({
+        _links: {
+            "base": `${config.domainHost}/users`,
+            "next": "/page?limit=5&start=5",
+            "prev": ""
+        },
+        total: totalLength.length,
+        limit: 5,
+        size: users.length,
+        results: users
+    })
 }
 
 
