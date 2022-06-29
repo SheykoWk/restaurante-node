@@ -8,95 +8,89 @@ const registerUser = async (data) => {
     const hashedPassword = crypto.hashPassword(data.password);
     const userId = uuid.v4();
     const newUser = await users.create({
-        uuid: userId,
+        id: userId,
         ...data,
         password: hashedPassword,
         role_id: 1
-    })
+    });
     return {
         message: `User created succesfully with the id: ${userId}`,
         user: newUser,
     };
-}
+};
 
 //Solo administradores
-const getAllUsers = async() => {
+const getAllUsers = async () => {
     const users = await users.findAll({
-        attributes : {
-            exclude: ["password"]
-        }
-    })
-    return users
-}
+        attributes: {
+            exclude: ['password'],
+        },
+    });
+    return users;
+};
 
 [
     {
         id: 1,
         name: 'jose',
         age: 21,
-        country: 'col'
+        country: 'col',
     },
     {
         id: 2,
         name: 'wilmar',
         age: 27,
-        country: '<col>'
-    }
-]
-
-
+        country: '<col>',
+    },
+];
 
 //Solo administradores
-const getUserById = async(id) => {
+const getUserById = async (id) => {
     const user = await users.findByPk(id, {
-        attributes : {
-            exclude: ["password"]
-        }
-    })
-    return user
-}
+        attributes: {
+            exclude: ['password'],
+        },
+    });
+    return user;
+};
 
 //clientes y administradores
-const deleteUser = async(id) => {
+const deleteUser = async (id) => {
     try {
         const user = await users.destroy({
             where: {
-                id
-            }
-        })
+                id,
+            },
+        });
         return {
             message: `User with id: ${id} deleted succesfully.`,
-            user
-        }
+            user,
+        };
     } catch (error) {
-        return error
+        return error;
     }
-}
+};
 
 // cualquier rol
 const editUser = async (id, data) => {
-    const user = await users.update(data,{
+    const user = await users.update(data, {
         where: {
-            id
-        }
-    })
+            id,
+        },
+    });
     return {
         message: `User with id: ${id} eddited succesfully.`,
-        user: user
-    }
-}
+        user: user,
+    };
+};
 // todo:
 // ? Crear una funcion que genere un token alfanumerico aleatorio de 8 caracteres
 // ? Generar un nuevo token y agregar un nuevo registro a la tabla de verify_tokens, con el userId para enlazar el token
-
-
-
-
 
 module.exports = {
     registerUser,
     getAllUsers,
     getUserById,
     deleteUser,
-    editUser
-}
+    editUser,
+};
