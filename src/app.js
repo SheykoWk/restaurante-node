@@ -2,10 +2,11 @@
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
+const swagger = require('swagger-ui-express')
 //? Import files
 const config = require('./config')
 const userRouter = require('./users/users.routes').router
-
+const swaggerJson = require('./swagger.json')
 
 //? Initial configuration
 const app = express()
@@ -26,7 +27,7 @@ if(config.nodeEnv === 'development'){
 app.use("/api/v1/users", userRouter)
 //app.use("/api/v1/auth")
 
-
+app.use("/docs", swagger.serve, swagger.setup(swaggerJson))
 
 app.listen(config.port, () => {
     console.log(`Server started at port ${config.port}`)

@@ -5,7 +5,9 @@ require('../tools/auth')(passport)
 
 
 router.route('/')
-    .get( passport.authenticate('jwt', {session: false}) ,userHttpHandler.getAllUsers)
+    .get(
+         //passport.authenticate('jwt', {session: false}) ,
+         userHttpHandler.getAllUsers)
 
 
 

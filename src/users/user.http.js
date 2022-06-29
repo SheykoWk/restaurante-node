@@ -30,9 +30,8 @@ const getAllUsers = async (req, res) => {
     //  limit, offset, size, length
     const users = await usersControllers.getPaginatedUsers(offset, limit)
 
-    getPaginatedUsers(10)
 
-    
+
 
     res.status(200).json({
         _links: {
