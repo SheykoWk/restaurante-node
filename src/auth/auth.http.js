@@ -3,9 +3,12 @@
 // ? genere una url como la siguiente:
 // ! /auth/verify-account?token=fbdsfdfpoi&user_id=2
 
-const roles = require("../database/models/roles")
-const users = require("../database/models/users")
-const { createToken } = require("./auth.controller")
+const authControllers = require('./auth.controller');
+const userContollers = require('../users/users.controllers');
+const config = require('../config');
+const jwt = require('jsonwebtoken');
+const { toPromise } = require('../tools/toPromise');
+const loginSchema = require('../tools/verify').loginSchema
 
 const generateUrl = (token, userId) => {
     return `/auth/verify-account?token=${token}&user_id=${userId}`
@@ -17,7 +20,8 @@ const generateVerifyToken = (req, res) => {
         res.status(400).json({message: 'Error'})
     }
     const id = req.user.id
-    const token = createToken(id)
+    const token = authControllers.createToken(id)
+
     res.status(200).json({
         message: 'Confirm your account in the next url',
         url: generateUrl(token, id),
@@ -44,13 +48,37 @@ const verifyAccount = (req, res) => {
 
 
 
-const loginUser = (req, res) => {
+const loginUser = async (req, res) => {
+    const data = loginSchema.validate(req.body)
+    if (data.error) {
+        return res.status(400).json({ message: data.error.details[0].message });
+    } else if (!req.body.email || !req.body.password) {
+        return res.status(400).json({ message: data.error.details[0].message });
+    }
 
- 
-    const token = jwt.sign({
-        id,
-        email,
-        rol
-    })
-}
+    const [response, err] = await toPromise(authControllers.checkUsersCredential(
+        data.value.email,
+        data.value.password
+    ));
 
+    if (err || !response) {
+        return res.status(401).json({ message: 'Invalid Credential' });
+    }
+
+    const [user, error] = await toPromise(userContollers.getUserByEmail(req.body.email));
+    if(error || !user){
+        return res.status(401).json({ message: 'Invalid Credential' });
+    }
+    const token = jwt.sign(
+        {
+            id: user.id,
+            email: req.body.email,
+        },
+        config.jwtSecret
+    );
+    res.status(200).json({ token: token });
+};
+
+module.exports = {
+    loginUser,
+};
